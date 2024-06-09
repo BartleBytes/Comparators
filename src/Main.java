@@ -3,9 +3,32 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Student> students = initializeStudents();
 
-        // Add students to the list
+        if (students == null || students.isEmpty()) {
+            System.out.println("The student list is empty or not initialized.");
+            return;
+        }
+
+        // Print original list
+        System.out.println("Original List:");
+        printStudents(students);
+
+        // Sort and print by name
+        ArrayList<Student> studentsByName = new ArrayList<>(students);
+        SelectionSort.selectionSort(studentsByName, new NameComparator());
+        System.out.println("\nSorted by Name:");
+        printStudents(studentsByName);
+
+        // Sort and print by roll number
+        ArrayList<Student> studentsByRollNo = new ArrayList<>(students);
+        SelectionSort.selectionSort(studentsByRollNo, new RollNoComparator());
+        System.out.println("\nSorted by Roll Number:");
+        printStudents(studentsByRollNo);
+    }
+
+    private static ArrayList<Student> initializeStudents() {
+        ArrayList<Student> students = new ArrayList<>();
         students.add(new Student(10, "Alice", "123 Main St"));
         students.add(new Student(2, "Bob", "456 Elm St"));
         students.add(new Student(5, "Charlie", "789 Oak St"));
@@ -16,26 +39,15 @@ public class Main {
         students.add(new Student(7, "Hank", "505 Walnut St"));
         students.add(new Student(4, "Ivy", "606 Cherry St"));
         students.add(new Student(3, "Jack", "707 Willow St"));
+        return students;
+    }
 
-        // Print original list
-        System.out.println("Original List:");
+    private static void printStudents(ArrayList<Student> students) {
+        if (students == null || students.isEmpty()) {
+            System.out.println("No students to display.");
+            return;
+        }
         for (Student student : students) {
-            System.out.println(student);
-        }
-
-        // Create a new list for sorting by name to preserve the original order
-        ArrayList<Student> studentsByName = new ArrayList<>(students);
-        SelectionSort.selectionSort(studentsByName, new NameComparator());
-        System.out.println("\nSorted by Name:");
-        for (Student student : studentsByName) {
-            System.out.println(student);
-        }
-
-        // Create a new list for sorting by roll number to preserve the original order
-        ArrayList<Student> studentsByRollNo = new ArrayList<>(students);
-        SelectionSort.selectionSort(studentsByRollNo, new RollNoComparator());
-        System.out.println("\nSorted by Roll Number:");
-        for (Student student : studentsByRollNo) {
             System.out.println(student);
         }
     }
